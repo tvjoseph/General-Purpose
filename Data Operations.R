@@ -111,3 +111,17 @@ newsorted <- complete.cases(sorted) ## complete.cases to get all the data points
 k <- data.frame(hospital = 0,state = 0) ## Defining a new data frame
 
 month[,z] <- as.numeric(month[,z]) ## Converting into a numeric variable using the as.numeric function
+
+###
+NEI <- transform(NEI,year = factor(year)) ## Doing transformation
+
+### - Using the 'with'function
+
+with(subset(NEI,fips=="24510"),boxplot(log(Emissions)~year,main = "Emission data for Baltimore",xlab = "Year",ylab = "log(PM 2.5)"))
+dev.copy(png,file = "Assgn2-Plot2.png")
+dev.off()
+
+### - Using merge and grep functions
+
+mergedata <- merge(NEI,SCC,by.x = "SCC",by.y = "SCC",all=T) ## Merge function
+Coalset <- mergedata[grep("Coal",mergedata$SCC.Level.Three),] ## Grep function
